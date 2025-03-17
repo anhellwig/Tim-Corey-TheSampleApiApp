@@ -12,5 +12,6 @@ app.UseOpenApi();
 app.UseHttpsRedirection();
 
 app.MapRootEndpoint();
+app.MapCourseEndpoints();
 
 app.Run();
