@@ -6,8 +6,10 @@ public static class DependenciesConfig
 {
     public static void AddDependencies(this IHostApplicationBuilder builder)
     {
-        builder.Services.AddCorsServices()
+        builder.Services
             .AddOpenApiServices()
+            .AddCorsServices()
+            .AddAllHealthChecks()
             .AddTransient<CourseData>();
     }
 }

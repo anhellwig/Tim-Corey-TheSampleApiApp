@@ -12,6 +12,9 @@ app.UseOpenApi();
 app.UseHttpsRedirection();
 
 app.UseCorsConfig();
+
+app.MapAllHealthChecks();
+
 app.MapRootEndpoint();
 app.MapCourseEndpoints();
 
