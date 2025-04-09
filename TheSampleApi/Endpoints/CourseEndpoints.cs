@@ -7,12 +7,12 @@ public static class CourseEndpoints
 {
     public static void MapCourseEndpoints(this WebApplication app)
     {
-        app.MapGet("/courses", LoadAllCourses);
-        app.MapGet("/courses/{id}", LoadCourseById);
+        app.MapGet("/courses", LoadAllCoursesAsync);
+        app.MapGet("/courses/{id}", LoadCourseByIdAsync);
     }
 
-    private static IResult LoadAllCourses(CourseData courseData,
-        string? courseType, string? search)
+    private static async Task<IResult> LoadAllCoursesAsync(CourseData courseData,
+        string? courseType, string? search, int? delayInMs)
     {
         List<CourseModel> output = courseData.Courses;
 
@@ -29,12 +29,34 @@ public static class CourseEndpoints
                 !x.ShortDescription.Contains(search, StringComparison.OrdinalIgnoreCase));
         }
 
+        if (delayInMs is not null)
+        {
+            // max delay of 5 minutes
+            if (delayInMs > 300000)
+            {
+                delayInMs = 300000;
+            }
+
+            await Task.Delay(delayInMs.Value);
+        }
+
         return Results.Ok(output);
     }
 
-    private static IResult LoadCourseById(CourseData courseData, int id)
+    private static async Task<IResult> LoadCourseByIdAsync(CourseData courseData, int id, int? delayInMs)
     {
         CourseModel? output = courseData.Courses.SingleOrDefault(x => x.Id == id);
+
+        if (delayInMs is not null)
+        {
+            // max delay of 5 minutes
+            if (delayInMs > 300000)
+            {
+                delayInMs = 300000;
+            }
+
+            await Task.Delay(delayInMs.Value);
+        }
 
         if (output is null)
         {

@@ -17,5 +17,6 @@ app.MapAllHealthChecks();
 
 app.MapRootEndpoint();
 app.MapCourseEndpoints();
+app.MapErrorEndpoints();
 
 app.Run();
